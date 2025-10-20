@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Календарь</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f8;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-container {
+      background: #ffffff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: 0 auto 20px auto;
+    }
+
+    .form-container form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-container label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-container input[type="number"] {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .form-container input[type="number"]:focus {
+      outline: none;
+      border-color: #4CAF50;
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    }
+
+    .form-container button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .form-container button:hover {
+      background-color: #45a049;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .unique-count {
+      margin-bottom: 15px;
+      font-weight: bold;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .calendar-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .month {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      padding: 10px;
+      width: calc((100% - 5 * 20px) / 6);
+      min-width: 150px;
+      box-sizing: border-box;
+    }
+
+    .month h3 {
+      text-align: center;
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    th, td {
+      width: 14%;
+      padding: 3px;
+    }
+
+    th {
+      color: #555;
+    }
+
+    td {
+      color: #333;
+    }
+
+    td.weekend {
+      color: red;
+      font-weight: bold;
+    }
+
+    @media screen and (max-width: 1200px) {
+      .month {
+        width: calc((100% - 4 * 20px) / 3);
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      .month {
+        width: 100%;
+        max-width: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+<h1>Календарь по году</h1>
+
+<div class="form-container">
+  <form action="/calendar" method="post">
+    <label for="year">Введите год (>=1600):</label>
+    <input id="year" type="number" name="year" min="1600" required th:value="${year}" placeholder="2025">
+    <button type="submit">Показать</button>
+  </form>
+  <div class="error" th:if="${error}" th:text="${error}"></div>
+</div>
+
+
+<div class="error" th:if="${error}" th:text="${error}"></div>
+
+<div th:if="${uniqueCalendars}" class="unique-count">
+  Всего уникальных календарей (независимо от года):
+  <span th:text="${uniqueCalendars}"></span>
+</div>
+
+<div th:if="${months}" class="calendar-container">
+  <div th:each="m : ${months}" class="month">
+    <h3 th:text="${m.month} + ' ' + ${year}"></h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="week : ${m.weeks}">
+        <td th:each="d, iterStat : ${week}"
+            th:text="${d != null ? d : ''}"
+            th:classappend="${iterStat.index >= 5 && d != null} ? 'weekend' : ''"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>
