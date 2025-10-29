@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title} ?: 'Calendar App'">Calendar App</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+<header th:fragment="header">
+    <h1><a th:href="@{/}" class="logo">Calendar App</a></h1>
+    <nav>
+        <a th:href="@{/calendar/saved}">Мои календари</a>
+        <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/profile}">Мой профиль</a>
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/admin/users}">Пользователи</a>
+    </nav>
+</header>

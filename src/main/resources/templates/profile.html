@@ -1,0 +1,31 @@
+<!-- html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Профиль')"></head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<main>
+    <section class="profile-section">
+        <h2>Профиль пользователя</h2>
+
+        <div>
+            <p><strong>Имя пользователя:</strong> <span th:text="${username}">username</span></p>
+            <p th:if="${family_name}"><strong>Фамилия:</strong> <span th:text="${family_name}">family_name</span></p>
+            <p th:if="${email}"><strong>Email:</strong> <span th:text="${email}">email</span></p>
+
+            <p><strong>Статус Email:</strong>
+                <span th:if="${email_verified == true}">Почта подтверждена</span>
+                <span th:if="${email_verified == false}">Почта не подтверждена</span>
+                <span th:if="${email_verified == null}">Неизвестно</span>
+            </p>
+
+            <p th:if="${exp}"><strong>Срок токена (exp):</strong> <span th:text="${exp}">exp</span></p>
+        </div>
+
+        <p><a class="link-button" th:href="@{/}">На главную</a></p>
+    </section>
+</main>
+
+</body>
+</html>

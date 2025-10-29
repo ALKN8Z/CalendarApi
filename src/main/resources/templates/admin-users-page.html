@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Пользователи')}"></head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<section class="users-section">
+    <h2>Список пользователей</h2>
+
+    <table class="users-table">
+        <thead>
+        <tr>
+            <th>Имя пользователя</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="username : ${usernames}">
+            <td><a th:href="@{'/admin/users/' + ${username}}" th:text="${username}"></a></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

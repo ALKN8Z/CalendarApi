@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Главная')}"></head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<section class="form-section">
+    <h2>Введите год для просмотра календаря</h2>
+
+    <form th:action="@{/calendar/generate}" method="post">
+        <input name="year" type="number" id="yearInput" placeholder="Например, 2025"
+               th:value="${yearPayload != null} ? ${yearPayload.year} : ''" required
+               min="1600" max="9999">
+        <button type="submit">Показать календарь</button>
+    </form>
+
+
+    <div th:if="${errorMessage}" style="color:red; margin-top:10px;"
+         th:text="${errorTitle} + ': ' +  ${errorMessage}"></div>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

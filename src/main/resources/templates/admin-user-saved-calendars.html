@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Календари пользователя')}"></head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<section class="user-calendars-section">
+    <h2 th:text="'Календари пользователя ' + ${username}"></h2>
+
+    <ul class="saved-list">
+        <li th:each="year : ${years}">
+            <p th:text="${year}"></p>
+        </li>
+    </ul>
+
+    <div th:if="${years.size() == 0}">
+        <p>Этот пользователь пока не сохранял календари.</p>
+    </div>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

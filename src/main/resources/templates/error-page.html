@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Ошибка')}"></head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<section class="error-section">
+    <h2 th:text="${errorTitle} ?: 'Ошибка'"></h2>
+    <p th:text="${errorMessage} ?: 'Что-то пошло не так.'"></p>
+
+    <a href="/calendar" class="btn">На главную</a>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

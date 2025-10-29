@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Мои календари')}">
+    <style>
+        .link-button {
+            background: none;
+            border: none;
+            color: #007bff;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 1em;
+            padding: 0;
+            font-family: inherit;
+        }
+
+        .link-button:hover {
+            color: #0056b3;
+        }
+    </style>
+    <title>Список сохраненных календарей</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<section class="saved-section">
+    <h2>Сохранённые календари</h2>
+
+    <div th:if="${savedYears.size() > 0}">
+        <ul class="saved-list">
+            <li th:each="year : ${savedYears}">
+                <form th:action="@{/calendar/generate}" method="post" style="display:inline;">
+                    <input type="hidden" name="year" th:value="${year}">
+                    <button type="submit" class="link-button" th:text="${year}"></button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <div th:if="${savedYears.size() == 0}">
+        <p>У вас пока нет сохранённых календарей.</p>
+    </div>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+
+</body>
+</html>
